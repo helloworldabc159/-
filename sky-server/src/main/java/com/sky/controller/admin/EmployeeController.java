@@ -37,7 +37,6 @@ public class EmployeeController {
 
     /**
      * 登录
-     *
      * @param employeeLoginDTO
      * @return
      */
@@ -79,7 +78,7 @@ public class EmployeeController {
 
     /**
     * 新增员工
-    *
+    * @param employeeDTO
     * @return
     * */
     @PostMapping
@@ -90,8 +89,8 @@ public class EmployeeController {
     }
 
     /**
-     * 查询员工
-     *
+     * 分页查询
+     * @param employeePageQueryDTO
      * @return
      * */
     @GetMapping("/page")
@@ -99,4 +98,35 @@ public class EmployeeController {
         PageResult pageResult =  employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
     }
+    /**
+     * 修改员工状态
+     *
+     * @return
+     * */
+    @PostMapping("status/{status}")
+    public Result startOrStop(@PathVariable Integer status,Long id){
+        employeeService.saveOrStop(status,id);
+        return Result.success();
+    }
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     * */
+    @GetMapping("/{id}")
+    public Result<Employee> getById(@PathVariable Long id) {
+        Employee employee = employeeService.searchById(id);
+        return Result.success(employee);
+    }
+    /**
+     * 根据id修改员工信息
+     * @param employeeDTO
+     * @return
+     * */
+    @PutMapping
+    public Result changeById(@RequestBody EmployeeDTO employeeDTO) {
+        employeeService.changeById(employeeDTO);
+        return Result.success();
+    }
+
 }
