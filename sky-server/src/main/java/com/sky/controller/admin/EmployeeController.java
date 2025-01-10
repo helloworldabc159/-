@@ -116,6 +116,7 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public Result<Employee> getById(@PathVariable Long id) {
         Employee employee = employeeService.searchById(id);
+        employee.setPassword("***");
         return Result.success(employee);
     }
     /**
